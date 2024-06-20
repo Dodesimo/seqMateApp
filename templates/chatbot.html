@@ -149,64 +149,64 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="index.html">Benchmate.AI</a>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="analysis.html">Analysis</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="ChatBot.html">ChatBot</a>
-                    </li>
-                   
-                </ul>
-            </div>
-        </nav>
-    </header>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">Benchmate.AI</a>
 
-    <div class="chat-container">
-        <div class="chat-header">BenchmateBot</div>
-        <div class="chat-messages" id="chat-messages">
-            <!-- Example bot message (replace with JavaScript) -->
-            <div class="bot-message">Hello! How can I assist you today?</div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for ('main')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for ('analysis')}}">Analysis</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for ('chatbot')}}">ChatBot</a>
+                </li>
+
+            </ul>
         </div>
-        <div class="chat-input-container">
-            <input type="text" class="chat-input" id="user-input" placeholder="Type your message...">
-            <button class="send-button" onclick="sendMessage()">Send</button>
-        </div>
+    </nav>
+</header>
+
+<div class="chat-container">
+    <div class="chat-header">BenchmateBot</div>
+    <div class="chat-messages" id="chat-messages">
+        <!-- Example bot message (replace with JavaScript) -->
+        <div class="bot-message">Hello! How can I assist you today?</div>
     </div>
+    <div class="chat-input-container">
+        <input type="text" class="chat-input" id="user-input" placeholder="Type your message...">
+        <button class="send-button" onclick="sendMessage()">Send</button>
+    </div>
+</div>
 
-    <script>
-        function sendMessage() {
-            const userInput = document.getElementById('user-input').value;
-            if (userInput.trim() === '') return;
+<script>
+    function sendMessage() {
+        const userInput = document.getElementById('user-input').value;
+        if (userInput.trim() === '') return;
 
-            const chatMessages = document.getElementById('chat-messages');
+        const chatMessages = document.getElementById('chat-messages');
 
-            // User message
-            const userMessageElement = document.createElement('div');
-            userMessageElement.classList.add('user-message');
-            userMessageElement.textContent = userInput;
-            chatMessages.appendChild(userMessageElement);
+        // User message
+        const userMessageElement = document.createElement('div');
+        userMessageElement.classList.add('user-message');
+        userMessageElement.textContent = userInput;
+        chatMessages.appendChild(userMessageElement);
 
-            // Bot response (example)
-            const botResponseElement = document.createElement('div');
-            botResponseElement.classList.add('bot-message');
-            botResponseElement.textContent = 'I received: ' + userInput;
-            chatMessages.appendChild(botResponseElement);
+        // Bot response (example)
+        const botResponseElement = document.createElement('div');
+        botResponseElement.classList.add('bot-message');
+        botResponseElement.textContent = 'I received: ' + userInput;
+        chatMessages.appendChild(botResponseElement);
 
-            // Clear input field
-            document.getElementById('user-input').value = '';
+        // Clear input field
+        document.getElementById('user-input').value = '';
 
-            // Scroll to bottom of chat window
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-    </script>
+        // Scroll to bottom of chat window
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+</script>
 </body>
 </html>
