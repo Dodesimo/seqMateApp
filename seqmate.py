@@ -38,3 +38,19 @@ def fetchFASTQNames():
 
     return names
 
+def firstLineFASTQ(agentExecutor):
+    files = fetchFASTQNames()
+
+    prompts = []
+
+    for f in files:
+        prompt = (f"Using Bio, Could you open the FASTA files "
+                  f"{f}"
+                  f"and print its first line")
+        prompts.append(prompt)
+
+    outputs = []
+    for prompt in prompts:
+        outputs.append(agentExecutor.invoke({"input":prompt})['output'])
+
+    return outputs

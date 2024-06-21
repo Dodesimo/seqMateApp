@@ -1,4 +1,5 @@
-from seqmate import fetchFASTQNames, initializeAgent
+from seqmate import fetchFASTQNames, initializeAgent, firstLineFASTQ
 
 agentExecutor = initializeAgent()
-print(agentExecutor.invoke({"input":"What are the first five fibonacci numbers?"})['output'])
+outputs = firstLineFASTQ(agentExecutor)
+print(outputs[0])
