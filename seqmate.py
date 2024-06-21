@@ -76,3 +76,23 @@ def qualityControlFASTQ(agentExecutor):
         outputs.append(agentExecutor.invoke({"input": prompt})['output'])
 
     return outputs
+
+def trimFASTQ(agentExecutor):
+    files = fetchFASTQNames()
+
+    prompts = []
+
+    for f in files:
+        prompt = ("Using cutadapt and the Bash command line through the subprocess command, could you remove low quality regions and adapters of FASTA file "
+                  f"{f}"
+                  "Use an appropriate nucleotide sequence. Make edits and save your results in a new file within the /Users/devam/PycharmProjects/seqMateFrontEnd/edits folder"
+                  "Example command: cutadapt -a AACCGGTT -o output.fastq input.fastq")
+
+        prompts.append(prompt)
+
+    outputs = []
+
+    for prompt in prompts:
+        outputs.append(agentExecutor.invoke({"input": prompt})['output'])
+
+    return outputs

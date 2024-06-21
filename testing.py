@@ -1,5 +1,6 @@
-from seqmate import fetchFASTQNames, initializeAgent, firstLineFASTQ, qualityControlFASTQ
+from seqmate import (fetchFASTQNames, initializeAgent,
+                     firstLineFASTQ, qualityControlFASTQ, trimFASTQ)
 
 agentExecutor = initializeAgent()
-outputs = qualityControlFASTQ(agentExecutor)
-print(outputs[0])
+outputs = trimFASTQ(agentExecutor)
+print(outputs)
