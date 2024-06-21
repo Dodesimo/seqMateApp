@@ -54,3 +54,25 @@ def firstLineFASTQ(agentExecutor):
         outputs.append(agentExecutor.invoke({"input":prompt})['output'])
 
     return outputs
+
+#To do for flask frontend: display graphs.
+def qualityControlFASTQ(agentExecutor):
+    files = fetchFASTQNames()
+
+    prompts = []
+
+    for f in files:
+        prompt = ("Using Bio, could you conduct some quality control analysis of FASTA file "
+         f"{f}"
+         "Utilize metrics like PHRED score, duplication rate, and others you feel are beneficial. and create multiple GRAPHS/CHARTS for ALL metrics. THIS IS A MUST. "
+         "Provide exact average results, and narratives for results. "
+         "Do not worry about graph colors, focus on content.")
+
+        prompts.append(prompt)
+
+    outputs = []
+
+    for prompt in prompts:
+        outputs.append(agentExecutor.invoke({"input": prompt})['output'])
+
+    return outputs
