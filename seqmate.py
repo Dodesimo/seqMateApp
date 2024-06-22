@@ -46,6 +46,13 @@ def fetchFASTQTrimmed():
 
     return names
 
+def fetchSAMFiles():
+    names = []
+    for file in glob.glob("/Users/devam/PycharmProjects/seqMateFrontEnd/edits/*.sam"):
+        names.append(file)
+
+    return names
+
 def firstLineFASTQ(agentExecutor):
     files = fetchFASTQNames()
 
@@ -150,14 +157,15 @@ def genomeAlignmentFASTQ(agentExecutor):
     return outputs
 
 def samBamConversion(agentExecutor):
-    files = fetchFASTQNames()
+    files = fetchSAMFiles()
 
     prompts = []
 
     for f in files:
         prompt = (
             "You are in a environment wtih HISAT installed. The CONDA environment is 'seqmate.' First, do 'os.system('pyenv local miniforge3-22.11.1-4/envs/seqmate')'"
-            f"Use Pysam to convert SAM file {f} to BAM file. Store these files in the edits folder")
+            f"Use Pysam to convert SAM file {f} to BAM file. Store the BAM file in the edits folder. MAKE SURE ALL BAM FILES ARE SAVED IN THE edits FOLDER."
+            )
 
         prompts.append(prompt)
 
