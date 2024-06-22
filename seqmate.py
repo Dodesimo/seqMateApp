@@ -80,7 +80,7 @@ def qualityControlFASTQ(agentExecutor):
 def trimFASTQ(agentExecutor):
     files = fetchFASTQNames()
 
-    prompts = []
+    prompts = []    
 
     for f in files:
         prompt = ("Using cutadapt and the Bash command line through the subprocess command, could you remove low quality regions and adapters of FASTA file "
@@ -96,3 +96,76 @@ def trimFASTQ(agentExecutor):
         outputs.append(agentExecutor.invoke({"input": prompt})['output'])
 
     return outputs
+
+def getGenome():
+    names = []
+    for file in glob.glob("/Users/devam/PycharmProjects/seqMateFrontEnd/uploads/*.fa"):
+        names.append(file)
+
+    return names
+
+def indexGenomeHISAT(agentExecutor):
+    names = []
+    for file in glob.glob("/Users/devam/PycharmProjects/seqMateFrontEnd/uploads/*.fa"):
+        names.append(file)
+
+    prompt = ("You are in a environment wtih HISAT installed. The CONDA environment is 'seqmate.' First, do 'os.system('pyenv local miniforge3-22.11.1-4/envs/seqmate')' "
+              "Run the commands that create a HISAT index from "
+              f"{names[0]}")
+
+    output = agentExecutor.invoke({"input":prompt})['output']
+    return output
+
+def genomeAlignmentFASTQ(agentExecutor):
+    files = fetchFASTQNames()
+
+    prompts = []
+
+    genome = getGenome()[0]
+
+    for f in files:
+        prompt = (
+            "You are in a environment wtih HISAT installed. The CONDA environment is 'seqmate.' First, do 'os.system('pyenv local miniforge3-22.11.1-4/envs/seqmate')' "
+            "Using the ht2 file formats for the genome at hand, align the "
+            f"{f} with it. "
+            f"The genome index is {genome}'. "
+            "Produce a SAM file with the alignment outputs  in the edits folder")
+
+        prompts.append(prompt)
+
+    outputs = []
+
+    for prompt in prompts:
+        outputs.append(agentExecutor.invoke({"input": prompt})['output'])
+
+    return outputs
+
+def samBamConversion(agentExecutor):
+    files = fetchFASTQNames()
+
+    prompts = []
+
+    for f in files:
+        prompt = (
+            "You are in a environment wtih HISAT installed. The CONDA environment is 'seqmate.' First, do 'os.system('pyenv local miniforge3-22.11.1-4/envs/seqmate')'"
+            f"Use Pysam to convert SAM file {f} to BAM file. Store these files in the edits folder")
+
+        prompts.append(prompt)
+
+    outputs = []
+
+    for prompt in prompts:
+        outputs.append(agentExecutor.invoke({"input": prompt})['output'])
+
+    return outputs
+
+def getGenomeAnnotations(agent):
+    files = fetchFASTQNames()
+
+    prompts = []
+
+    for f in files:
+        prompt = ("You are in a environment wtih HISAT and featureCounts installed. "
+                  "The CONDA environment is 'seqmate.' "
+                  "First, do 'os.system('pyenv local miniforge3-22.11.1-4/envs/seqmate')'"
+                  "Using wget, download JUST the genome annotation file (with extension .gtf) for /Users/devam/PycharmProjects/SeqMate/data/mus_musculus_genome.fa and unzip it.")

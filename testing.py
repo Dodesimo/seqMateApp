@@ -1,6 +1,6 @@
 from seqmate import (fetchFASTQNames, initializeAgent,
-                     firstLineFASTQ, qualityControlFASTQ, trimFASTQ)
+                     firstLineFASTQ, qualityControlFASTQ, trimFASTQ, indexGenomeHISAT)
 
 agentExecutor = initializeAgent()
-outputs = trimFASTQ(agentExecutor)
+outputs = indexGenomeHISAT(agentExecutor)
 print(outputs)
