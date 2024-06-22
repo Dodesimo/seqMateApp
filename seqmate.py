@@ -57,6 +57,9 @@ def fetchBAMFiles():
     names = []
     for file in glob.glob("/Users/devam/PycharmProjects/seqMateFrontEnd/edits/*.bam"):
         names.append(file)
+
+    return names
+
 def firstLineFASTQ(agentExecutor):
     files = fetchFASTQNames()
 
@@ -119,6 +122,13 @@ def trimFASTQ(agentExecutor):
 def getGenome():
     names = []
     for file in glob.glob("/Users/devam/PycharmProjects/seqMateFrontEnd/uploads/*.fa"):
+        names.append(file)
+
+    return names
+
+def fetchGenomeAnnotation():
+    names = []
+    for file in glob.glob("/Users/devam/PycharmProjects/seqMateFrontEnd/*.gtf"):
         names.append(file)
 
     return names
@@ -189,6 +199,17 @@ def getGenomeAnnotations(agentExecutor):
               "First, do 'os.system('pyenv local miniforge3-22.11.1-4/envs/seqmate')'"
               "Using wget, download JUST the genome annotation file (with extension .gtf) for"
               f"{genome} from ftp.ensembl.org and unzip it. MAKE SURE TO DOWNLOAD USING WGET AND UNZIP.")
+
+    output = agentExecutor.invoke({"input": prompt})['output']
+    return output
+
+def featureCountGeneration(agentExecutor):
+    bams = fetchBAMFiles()
+    annotation = fetchGenomeAnnotation()
+
+    prompt = ("You are in a environment wtih HISAT and featureCounts installed. The CONDA environment is 'seqmate.' First, do 'os.system('pyenv local miniforge3-22.11.1-4/envs/seqmate')'Using featureCounts, produce a count matrix using "
+             f"{bams} and {annotation}. Store it in file 'featureCounts_output.csv' Format this output file as a Comma Seperated Value that makes the counts easy to read in a Pandas Dataframe"
+                 "Example command: 'featureCounts -p -O -T n -a example_genome_annotation.gtf -o example_featureCounts_output.out sorted_example_alignment.bam'")
 
     output = agentExecutor.invoke({"input": prompt})['output']
     return output
