@@ -1,6 +1,6 @@
 from seqmate import (fetchFASTQNames, initializeAgent,
-                     firstLineFASTQ, qualityControlFASTQ, trimFASTQ, indexGenomeHISAT, fetchFASTQTrimmed, genomeAlignmentFASTQ, samBamConversion)
+                     firstLineFASTQ, qualityControlFASTQ, trimFASTQ, getGenomeAnnotations, indexGenomeHISAT, fetchFASTQTrimmed, genomeAlignmentFASTQ, samBamConversion)
 
 agentExecutor = initializeAgent()
-outputs = samBamConversion(agentExecutor)
+outputs = getGenomeAnnotations(agentExecutor)
 print(outputs)

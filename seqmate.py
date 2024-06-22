@@ -53,6 +53,10 @@ def fetchSAMFiles():
 
     return names
 
+def fetchBAMFiles():
+    names = []
+    for file in glob.glob("/Users/devam/PycharmProjects/seqMateFrontEnd/edits/*.bam"):
+        names.append(file)
 def firstLineFASTQ(agentExecutor):
     files = fetchFASTQNames()
 
@@ -177,13 +181,14 @@ def samBamConversion(agentExecutor):
     return outputs
 
 def getGenomeAnnotations(agentExecutor):
+
     genome = getGenome()[0]
 
     prompt = ("You are in a environment wtih HISAT and featureCounts installed. "
               "The CONDA environment is 'seqmate.' "
               "First, do 'os.system('pyenv local miniforge3-22.11.1-4/envs/seqmate')'"
-              "Using wget, download JUST the genome annotation file (with extension .gtf) for "
-              f"{genome} and unzip it.")
+              "Using wget, download JUST the genome annotation file (with extension .gtf) for"
+              f"{genome} from ftp.ensembl.org and unzip it. MAKE SURE TO DOWNLOAD USING WGET AND UNZIP.")
 
     output = agentExecutor.invoke({"input": prompt})['output']
     return output
