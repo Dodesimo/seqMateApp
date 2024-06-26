@@ -225,9 +225,60 @@ def countTableColumnEdit(agentExecutor):
               f"first open it in a pandas dataframe with a tab delimiter and setting skiprows=1. "
               f"Get rid of all columns other than Geneid, {bams}. "
               f"Get rid of rows with zeroes for the column headers {bams}' "
-              f"Transpose this matrix, and then Export this as editedCountMatrix.csv")
+              f"Transpose this matrix. Export this as editedCountMatrix.csv")
 
     output = agentExecutor.invoke({"input": prompt})['output']
     return output
 
-def metaDataGeneration()
+def metaDataGeneration(agentExecutor, controls):
+    counts = "/Users/devam/PycharmProjects/seqMateFrontEnd/editedCountMatrix.csv"
+
+    prompt = ("Open the Pandas DataFrame "
+              f"{counts}, skip the first line."
+              f"and put the first column of the dataset in a column titled 'Sample.' "
+              f"Then create another column titled 'Condition' from the list "
+              f"{controls}."
+              f"Create a new dataframe with these two columns, and export this as 'metadata.csv'")
+
+    output = agentExecutor.invoke({"input": prompt})['output']
+    return output
+def diffExp(agentExecutor):
+    counts = "/Users/devam/PycharmProjects/seqMateFrontEnd/editedCountMatrix.csv"
+    metadata = "/Users/devam/PycharmProjects/seqMateFrontEnd/metadata.csv"
+
+    prompt = ("Using pydeseq2.dds, create a DeseqDataSet object with the counts "
+              f"{counts} file being loaded into a Pandas Dataframe with the first line skipped and the first column dropped."
+              f"the metadata being the {metadata} loaded into a Pandas Dataframe, and design_factors being 'Condition.' Here is some example code:"
+                 "dds = DeseqDataSet(counts=counts, metadata=metadata, design_factors='Condition'). Then run dds.deseq2(). Then, using pydeseq.ds, run DeseqStats on the the dds object using stat_res = DeseqStats(dds, contrast=('Condition', 'NC', 'C')). Generate a summary of the stats through stat_res.summary() and store the results dataframe of stat_res.results_df in a csv file titled deseq2Results.csv")
+
+    output = agentExecutor.invoke({"input": prompt})['output']
+    return output
+
+def summaryStatsEdit(agentExecutor):
+    counts = "/Users/devam/PycharmProjects/seqMateFrontEnd/editedCountMatrix.csv"
+    results = "/Users/devam/PycharmProjects/seqMateFrontEnd/deseq2Results.csv"
+
+    prompt = ("You have access to running queries using PubMed. Open the summary stats found at "
+              f"{results} "
+              "and add the column headers of the "
+              f"{counts} "
+              "as the first column of the summary stats. "
+              "Title this column as 'Genes'. Then, save the updated summary stats as a csv file at the same location")
+
+    output = agentExecutor.invoke({"input": prompt})['output']
+    return output
+
+def filter(agentExecutor, log2FoldChange, pvalue):
+    results = "/Users/devam/PycharmProjects/seqMateFrontEnd/updated_deseq2Results.csv"
+
+    prompt = ("Using "
+              f"{results}, "
+              f"store the entries with high log2FoldChange "
+              f"(greater than {log2FoldChange}) and "
+              f"low pvalue (less than {pvalue}) "
+              f"in an external CSV file titled 'greatestContributors.csv")
+
+    output = agentExecutor.invoke({"input":prompt})['output']
+    return output
+
+def generateUniprotSummaries(agentExecutor):
