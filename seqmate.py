@@ -208,8 +208,26 @@ def featureCountGeneration(agentExecutor):
     annotation = fetchGenomeAnnotation()
 
     prompt = ("You are in a environment wtih HISAT and featureCounts installed. The CONDA environment is 'seqmate.' First, do 'os.system('pyenv local miniforge3-22.11.1-4/envs/seqmate')'Using featureCounts, produce a count matrix using "
-             f"{bams} and {annotation}. Store it in file 'featureCounts_output.csv' Format this output file as a Comma Seperated Value that makes the counts easy to read in a Pandas Dataframe"
+             f"{bams} and {annotation}. DELETE THE FIRST LINE OF THE DOCUMENT THAT CONTAINS THE COMMAND, and store it in file 'featureCounts_output.csv'"
                  "Example command: 'featureCounts -p -O -T n -a example_genome_annotation.gtf -o example_featureCounts_output.out sorted_example_alignment.bam'")
 
     output = agentExecutor.invoke({"input": prompt})['output']
     return output
+
+def countTableColumnEdit(agentExecutor):
+
+    bams = fetchBAMFiles()
+    bams = " ".join(str(bam) for bam in bams)
+    counts = "/Users/devam/PycharmProjects/seqMateFrontEnd/featureCounts_output.csv"
+
+    prompt = ("Using the "
+              f"{counts}, "
+              f"first open it in a pandas dataframe with a tab delimiter and setting skiprows=1. "
+              f"Get rid of all columns other than Geneid, {bams}. "
+              f"Get rid of rows with zeroes for the column headers {bams}' "
+              f"Transpose this matrix, and then Export this as editedCountMatrix.csv")
+
+    output = agentExecutor.invoke({"input": prompt})['output']
+    return output
+
+def metaDataGeneration()

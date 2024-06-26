@@ -1,6 +1,6 @@
 from seqmate import (fetchFASTQNames, initializeAgent,
-                     firstLineFASTQ, qualityControlFASTQ, trimFASTQ, getGenomeAnnotations, indexGenomeHISAT, fetchFASTQTrimmed, genomeAlignmentFASTQ, samBamConversion, featureCountGeneration)
+                     firstLineFASTQ, qualityControlFASTQ, trimFASTQ, getGenomeAnnotations, indexGenomeHISAT, fetchFASTQTrimmed, genomeAlignmentFASTQ, samBamConversion, featureCountGeneration, countTableColumnEdit)
 
 agentExecutor = initializeAgent()
-outputs = featureCountGeneration(agentExecutor)
+outputs = countTableColumnEdit(agentExecutor)
 print(outputs)
