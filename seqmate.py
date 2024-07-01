@@ -315,12 +315,12 @@ def filter(agentExecutor, log2FoldChange, pvalue):
     return output
 
 
-def generateUniprotSummaries(agentExecutor):
+def generateUniprotSummaries(agentExecutor, topNGenes):
     df = pd.read_csv("/Users/devam/PycharmProjects/seqMateFrontEnd/greatestContributors.csv")
     df = df.T
     genes = df.head(1).to_string(header=False)
 
-    prompt = ("For all the genes in "
+    prompt = (f"For all {topNGenes} genes in "
               f"{genes}, use the gget package to get information about each gene and store it in a Pandas Dataframe. Store save each gene's dataframe in a new folder titled 'genes.' Example: 'pd.DataFrame(gget.info('ENSMUSG00000023150')).to_csv()'")
 
     output = agentExecutor.invoke({'input': prompt})['output']
