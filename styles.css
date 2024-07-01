@@ -104,12 +104,14 @@ body {
 }
 
 .upload-container {
+    align-items: center;
     position: relative;
     top: 200px;
     left: 15%;
     transform: translateX(-50%);
     text-align: center;
     margin-top: 20px;
+
 }
 
 .upload-label {
@@ -125,6 +127,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     border: 1px solid #ccc;
+    text-align: center;
 }
 
 #folderUpload {
