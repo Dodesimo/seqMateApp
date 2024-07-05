@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Aesthetic Page 2</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.2/darkly/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        .bg-darkgrey {
+            background-color: #343a40 !important; /* Change this color as per your preference */
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">SeqMate</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="analysis.html">Analysis</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="chatbot.html">Chatbot</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<form action="{{ url_for('analysis') }}" enctype="multipart/form-data" method="post">
+    <div class="container text-center mt-5">
+        <div class="box mt-5">
+            <h1 class="title">Analysis</h1>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="upload-container">
+                    <input type="file" name="uploadDataset" webkitdirectory multiple>
+                    <p></p>
+                    <label class="upload-label">Upload your FASTQ files.</label>
+
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="box">
+                    <input type="text" class="textbox form-control bg-darkgrey" name="controlExperimental"
+                           placeholder="Enter your control/experimental files.">
+                    <label class="text-label mt-2">Enter which FASTQ files are control/experimental in the order you
+                        uploaded them. Enter C if it is control, NC if it is experimental, and seperate using commas.</label>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="upload-container">
+                    <input type="file" name="genomeUpload" webkitdirectory style="text-align: center">
+                    <p></p>
+                    <label class="upload-label">Upload your genome.</label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-4">
+                <div class="box">
+                    <input type="text" class="textbox form-control bg-darkgrey" name="log2FoldChange"
+                           placeholder="Enter your log2FoldChange threshold.">
+                    <label class="text-label mt-2">Enter your log2FoldChange threshold.</label>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="box">
+                    <input type="text" class="textbox form-control bg-darkgrey" name="pvalue"
+                           placeholder="Enter your p-value threshold.">
+                    <label class="text-label mt-2">Enter your p-value threshold.</label>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="box">
+                    <input type="text" class="textbox form-control bg-darkgrey" name="adapterSequence"
+                           placeholder="Enter sequence.">
+                    <label class="text-label mt-2">Enter your desired adapter sequence for cutadapt.</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" style="text-align: center">
+            <div class="col-md-4 mb-4" style="margin: auto">
+                <div class="box" style="margin: auto">
+                    <input type="text" class="textbox form-control bg-darkgrey" name="topXGenes"
+                           placeholder="Enter the # of genes.">
+                    <label class="text-label mt-2">Enter the number of genes you are interested in.</label>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center">
+            <div class="col-md-4 mb-4" style="margin: auto">
+                <div class="box" style="margin: auto">
+                    <input type="submit" name="rnaseq" value="Run RNA Seq">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+    
