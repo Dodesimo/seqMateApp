@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, url_for
 from seqmate import initializeAgent, qualityControlFASTQ, indexGenomeHISAT, trimFASTQ, genomeAlignmentFASTQ, \
     samBamConversion, getGenomeAnnotations, featureCountGeneration, countTableColumnEdit, metaDataGeneration, diffExp, \
-    summaryStatsEdit, generateUniprotSummaries, generateGeneSummaries
+    summaryStatsEdit, generateUniprotSummaries, generateGeneSummaries, filter
 import os
 import requests
 
@@ -24,7 +24,7 @@ def analysis():
 
         fastqsControl = request.form.get('controlExperimental').split(",")
         genome = request.files.get('genomeUpload')
-        genome.save(os.path.join("/Users/devam/PycharmProjects/seqMateFrontEnd", genome.filename))
+        genome.save(os.path.join("/Users/devam/PycharmProjects/seqMateFrontEnd/uploads", genome.filename))
 
         log2FoldChange = request.form.get('log2FoldChange')
         pValueThreshold = request.form.get('pvalue')
@@ -32,20 +32,22 @@ def analysis():
         topNGenes = request.form.get('topXGenes')
 
         agentExecutor = initializeAgent()
-        qualityControlFASTQ(agentExecutor)
-        trimFASTQ(agentExecutor)
-        indexGenomeHISAT(agentExecutor)
-        genomeAlignmentFASTQ(agentExecutor)
-        samBamConversion(agentExecutor)
-        getGenomeAnnotations(agentExecutor)
-        featureCountGeneration(agentExecutor)
-        countTableColumnEdit(agentExecutor)
-        metaDataGeneration(agentExecutor,fastqsControl)
+        #qualityControlFASTQ(agentExecutor)
+        #trimFASTQ(agentExecutor)
+        #indexGenomeHISAT(agentExecutor)
+        #genomeAlignmentFASTQ(agentExecutor)
+        #samBamConversion(agentExecutor)
+        #featureCountGeneration(agentExecutor)
+        #countTableColumnEdit(agentExecutor)
+        #metaDataGeneration(agentExecutor,fastqsControl)
         diffExp(agentExecutor)
         summaryStatsEdit(agentExecutor)
-        filter(agentExecutor, log2FoldChange, pValueThreshold)
+        filter(agentExecutor, log2FoldChange, pValueThreshold, topNGenes)
         generateUniprotSummaries(agentExecutor, topNGenes)
-        generateGeneSummaries()
+        outputs = generateGeneSummaries()
+
+        for output in outputs:
+            print(output)
 
         return render_template('analysis.html')
 
