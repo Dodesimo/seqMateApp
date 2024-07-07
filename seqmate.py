@@ -321,7 +321,7 @@ def generateUniprotSummaries(agentExecutor, topNGenes):
     genes = df.head(1).to_string(header=False)
 
     prompt = (f"For all {topNGenes} genes in "
-              f"{genes}, use the gget package to get information about each gene and store it in a Pandas Dataframe. Store save each gene's dataframe in a new folder titled 'genes.' Example: 'pd.DataFrame(gget.info('ENSMUSG00000023150')).to_csv()' USE THIS EXAMPLE FOR ALL INSTANCES.")
+              f"{genes}, use the gget package to get information about each gene and store it in a Pandas Dataframe. Save each gene's dataframe in a new folder titled 'genes' and title it the gene's name (for example,ENSMUSG00000023150). Example: 'import pandas as pd import gget pd.DataFrame(gget.info('ENSMUSG00000023150')).to_csv()' STRICTLY USE THIS EXAMPLE FOR ALL INSTANCES.")
 
     output = agentExecutor.invoke({'input': prompt})['output']
     return output
